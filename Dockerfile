@@ -21,6 +21,17 @@ RUN ln -s /spark/jars /aws-glue-libs/jarsv1
 RUN pip3 install pytest
 RUN /aws-glue-libs/bin/gluepytest --version
 
+# Zeppelin
+RUN curl -s http://archive.apache.org/dist/zeppelin/zeppelin-0.8.2/zeppelin-0.8.2-bin-netinst.tgz | tar xzf -
+RUN mv zeppelin-0.8.2-bin-netinst zeppelin
+
+ENV ZEPPELIN_HOME /zeppelin
+ENV ZEPPELIN_ADDR 0.0.0.0
+ENV ZEPPELIN_PORT 8080
+EXPOSE 8080
+
+COPY bin/gluezeppelin /aws-glue-libs/bin/
+
 WORKDIR /aws-glue-libs/bin/
 
 ENTRYPOINT ["/bin/bash"]
