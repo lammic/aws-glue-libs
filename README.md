@@ -49,11 +49,19 @@ First, export the AWS credentials, e.g. via the utility [aws-env](https://github
 
 Run
 ```sh
-docker run -it --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY awsgluelibs:latest gluepyspark
+docker run -it --rm \
+    -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+    -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+    awsgluelibs:latest \
+    gluepyspark
 ```
 or
 ```sh
-docker run -it --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY awsgluelibs:latest gluesparksubmit
+docker run -it --rm \
+    -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+    -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+    awsgluelibs:latest \
+    gluesparksubmit
 ```
 to start a PySpark shell or submit a job locally.
 
@@ -61,16 +69,24 @@ to start a PySpark shell or submit a job locally.
 
 Run
 ```sh
-docker run -it --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -p 8080:8080 awsgluelibs:latest gluezeppelin
+docker run -it --rm \
+    -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+    -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+    awsgluelibs:latest \
+    gluezeppelin
 ```
 to use Apache Zeppelin with the local Spark instance.
 
 ### Local Zeppelin with remote Glue development endpoint
 Run
 ```sh
-docker run -it --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -p 8080:8080 awsgluelibs:latest gluezeppelinremote
+docker run -it --rm \
+    -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+    -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+    awsgluelibs:latest \
+    gluezeppelinremote
 ```
-to use Apache Zeppeling with the remote Glue Development endpoint, then use SSH port forwarding to connect
+to use Apache Zeppelin with the remote Glue Development endpoint, then use SSH port forwarding to connect
 ```sh
 ssh -i $PRIVATE_KEY_FILE_PATH -vNTL 9007:169.254.76.1:9007 glue@$DEV_ENDPOINT_PUBLIC_DNS
 ```
