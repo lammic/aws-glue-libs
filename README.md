@@ -31,3 +31,47 @@ pytest: ./bin/gluepytest
 ## Licensing
 
 The libraries in this repository licensed under the [Amazon Software License](http://aws.amazon.com/asl/) (the "License"). They may not be used except in compliance with the License, a copy of which is included here in the LICENSE file.
+
+# Docker
+
+The dockerized version allows to run Glue scripts locally or to connect to remote Glue Development endpoints.
+
+Create the image with
+```sh
+docker build --rm -f Dockerfile -t awsgluelibs:latest .
+```
+
+## Usage
+
+First, export the AWS credentials, e.g. via the utility [aws-env](https://github.com/naftulikay/).
+
+### Local PySpark
+
+Run
+```sh
+docker run -it --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY awsgluelibs:latest gluepyspark
+```
+or
+```sh
+docker run -it --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY awsgluelibs:latest gluesparksubmit
+```
+to start a PySpark shell or submit a job locally.
+
+### Local Zeppelin
+
+Run
+```sh
+docker run -it --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -p 8080:8080 awsgluelibs:latest gluezeppelin
+```
+to use Apache Zeppelin with the local Spark instance.
+
+### Local Zeppelin with remote Glue development endpoint
+Run
+```sh
+docker run -it --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -p 8080:8080 awsgluelibs:latest gluezeppelinremote
+```
+to use Apache Zeppeling with the remote Glue Development endpoint, then use SSH port forwarding to connect
+```sh
+ssh -i $PRIVATE_KEY_FILE_PATH -vNTL 9007:169.254.76.1:9007 glue@$DEV_ENDPOINT_PUBLIC_DNS
+```
+
