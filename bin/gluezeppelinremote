@@ -2,4 +2,5 @@
 
 ROOT_DIR="$(cd $(dirname "$0")/..; pwd)"
 source $ROOT_DIR/bin/glue-setup.sh
+cp interpreter.json /zeppelin/conf/
 exec "$ZEPPELIN_HOME/bin/zeppelin.sh"

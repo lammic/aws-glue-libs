@@ -24,13 +24,13 @@ RUN /aws-glue-libs/bin/gluepytest --version
 # Zeppelin
 RUN curl -s http://archive.apache.org/dist/zeppelin/zeppelin-0.8.2/zeppelin-0.8.2-bin-netinst.tgz | tar xzf -
 RUN mv zeppelin-0.8.2-bin-netinst zeppelin
-
+COPY bin/gluezeppelin /aws-glue-libs/bin/
+COPY bin/gluezeppelinremote /aws-glue-libs/bin/
+COPY interpreter.json /
 ENV ZEPPELIN_HOME /zeppelin
 ENV ZEPPELIN_ADDR 0.0.0.0
 ENV ZEPPELIN_PORT 8080
 EXPOSE 8080
-
-COPY bin/gluezeppelin /aws-glue-libs/bin/
 
 WORKDIR /aws-glue-libs/bin/
 
