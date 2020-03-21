@@ -38,7 +38,7 @@ The dockerized version allows to run Glue scripts locally or to connect to remot
 
 Create the image with
 ```sh
-docker build --rm -f Dockerfile -t awsgluelibs:latest .
+docker build --squash --rm -f Dockerfile -t awsgluelibs:latest .
 ```
 
 ## Usage
@@ -75,9 +75,10 @@ docker run -it --rm \
     awsgluelibs:latest \
     gluezeppelin
 ```
-to use Apache Zeppelin with the local Spark instance.
+to use Apache Zeppelin with the local Spark instance. Point your browser at http://localhost:8080.
 
 ### Local Zeppelin with remote Glue development endpoint
+
 Run
 ```sh
 docker run -it --rm \
@@ -91,3 +92,14 @@ to use Apache Zeppelin with the remote Glue Development endpoint, then use SSH p
 ssh -i $PRIVATE_KEY_FILE_PATH -vNTL 9007:169.254.76.1:9007 glue@$DEV_ENDPOINT_PUBLIC_DNS
 ```
 
+### Local Jupyter
+
+Run
+```sh
+docker run -it --rm \
+    -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+    -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+    awsgluelibs:latest \
+    gluejupyter
+```
+to use Jupyter with the local Spark instance. Point your browser at http://localhost:8888 or use the URL displayed in the console.

@@ -32,6 +32,21 @@ ENV ZEPPELIN_ADDR 0.0.0.0
 ENV ZEPPELIN_PORT 8080
 EXPOSE 8080
 
+# Jupyter
+RUN apk add gcc g++ krb5-dev libc-dev libffi-dev libxml2-dev libxslt-dev openssl-dev py3-zmq python3-dev
+RUN pip3 install notebook jupyter_contrib_nbextensions sparkmagic
+RUN jupyter contrib nbextension install --system
+RUN jupyter nbextensions_configurator enable --system
+RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension
+#RUN cd /usr/lib/python3.6/site-packages/ && \
+#    jupyter-kernelspec install sparkmagic/kernels/sparkkernel && \
+#    jupyter-kernelspec install sparkmagic/kernels/pysparkkernel && \
+#    jupyter-kernelspec install sparkmagic/kernels/sparkrkernel
+#RUN jupyter serverextension enable --py sparkmagic
+COPY localpyspark-kernel.json /root/.local/share/jupyter/kernels/localpyspark/kernel.json
+COPY bin/gluejupyter /aws-glue-libs/bin/
+EXPOSE 8888
+
 WORKDIR /aws-glue-libs/bin/
 
 ENTRYPOINT ["/bin/bash"]
