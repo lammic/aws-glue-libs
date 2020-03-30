@@ -14,9 +14,8 @@ ENV SPARK_HOME /spark
 
 # AWS Glue libs
 RUN git clone https://github.com/awslabs/aws-glue-libs.git && cd aws-glue-libs && git checkout glue-1.0 && cd -
-
-# Fix for https://github.com/awslabs/aws-glue-libs/issues/25
-RUN ln -s /spark/jars /aws-glue-libs/jarsv1
+# See https://github.com/awslabs/aws-glue-libs/issues/25
+COPY bin/glue-setup.sh /aws-glue-libs/bin/
 
 RUN pip3 install pytest
 RUN /aws-glue-libs/bin/gluepytest --version

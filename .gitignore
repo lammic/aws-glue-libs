@@ -4,3 +4,4 @@ conf/
 jars/
 derby.log
 metastore_db/
+.vscode/settings.json

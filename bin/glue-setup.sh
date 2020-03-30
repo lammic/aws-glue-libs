@@ -18,6 +18,10 @@ export PYTHONPATH="$GLUE_PY_FILES:$PYTHONPATH"
 # Run mvn copy-dependencies target to get the Glue dependencies locally
 mvn -f $ROOT_DIR/pom.xml -DoutputDirectory=$ROOT_DIR/jars dependency:copy-dependencies
 
+# See https://github.com/awslabs/aws-glue-libs/issues/25
+rm ${GLUE_JARS_DIR}/netty-3.6.2.Final.jar
+rm ${GLUE_JARS_DIR}/netty-all-4.0.23.Final.jar
+
 export SPARK_CONF_DIR=${ROOT_DIR}/conf
 mkdir $SPARK_CONF_DIR
 rm $SPARK_CONF_DIR/spark-defaults.conf

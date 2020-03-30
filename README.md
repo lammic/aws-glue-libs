@@ -40,6 +40,10 @@ Create the image with
 ```sh
 docker build --squash --rm -f Dockerfile -t awsgluelibs:latest .
 ```
+or pull it from DockerHub with
+```sh
+docker pull lammic/awsgluelibs:latest
+```
 
 ## Usage
 
@@ -52,7 +56,8 @@ Run
 docker run -it --rm \
     -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
     -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
-    awsgluelibs:latest \
+    --mount type=bind,source="$(pwd)",target=/shared \
+    lammic/awsgluelibs:latest \
     gluepyspark
 ```
 or
@@ -60,7 +65,8 @@ or
 docker run -it --rm \
     -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
     -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
-    awsgluelibs:latest \
+    --mount type=bind,source="$(pwd)",target=/shared \
+    lammic/awsgluelibs:latest \
     gluesparksubmit
 ```
 to start a PySpark shell or submit a job locally.
@@ -72,7 +78,9 @@ Run
 docker run -it --rm \
     -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
     -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
-    awsgluelibs:latest \
+    --mount type=bind,source="$(pwd)",target=/shared \
+    -p 8080:8080 \
+    lammic/awsgluelibs:latest \
     gluezeppelin
 ```
 to use Apache Zeppelin with the local Spark instance. Point your browser at http://localhost:8080.
@@ -84,7 +92,9 @@ Run
 docker run -it --rm \
     -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
     -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
-    awsgluelibs:latest \
+    --mount type=bind,source="$(pwd)",target=/shared \
+    -p 8080:8080 \
+    lammic/awsgluelibs:latest \
     gluezeppelinremote
 ```
 to use Apache Zeppelin with the remote Glue Development endpoint, then use SSH port forwarding to connect
@@ -99,7 +109,9 @@ Run
 docker run -it --rm \
     -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
     -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
-    awsgluelibs:latest \
+    --mount type=bind,source="$(pwd)",target=/shared \
+    -p 8888:8888 \
+    lammic/awsgluelibs:latest \
     gluejupyter
 ```
 to use Jupyter with the local Spark instance. Point your browser at http://localhost:8888 or use the URL displayed in the console.
